@@ -24,7 +24,7 @@ public class CharacterMovement : MonoBehaviour
     {
         camera_yaw = PC_CAMERA_SPEED * Input.GetAxis("Mouse X");
         camera_pitch -= PC_CAMERA_SPEED * Input.GetAxis("Mouse Y");
-        camera_pitch = Mathf.Clamp(camera_pitch, -10.0f, 39.9f);
+        camera_pitch = Mathf.Clamp(camera_pitch, 10.0f, 39.9f);
 
         Vector3 camera_angles = pc_camera.transform.eulerAngles;
         camera_angles.x = camera_pitch;
