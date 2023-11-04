@@ -50,7 +50,7 @@ sampler2D _FalloffTex;
 fixed4 frag(v2f i) : SV_Target
 {
     fixed4 texS = tex2Dproj(_ShadowTex, UNITY_PROJ_COORD(i.uvShadow));
-    //texS.a = 1.0 - texS.a;
+    texS.a = 1.0 - texS.a;
  
     fixed4 texF = tex2Dproj(_FalloffTex, UNITY_PROJ_COORD(i.uvFalloff));
     fixed4 res = lerp(fixed4(1, 1, 1, 0), texS, texF.a);

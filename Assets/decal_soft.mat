@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: decal
+  m_Name: decal_soft
   m_Shader: {fileID: 4800000, guid: 4c72d967a207c2c46ad0412623244795, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
@@ -105,7 +105,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
-        m_Texture: {fileID: 2800000, guid: 107c7885bd68b794db9a6a0dfa0a612b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7319e5cd6b4ff6c44ab08e77845df798, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
