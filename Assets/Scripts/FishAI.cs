@@ -54,7 +54,7 @@ public class FishAI : MonoBehaviour
     void Update()
     {
         float dist_to_pc = (pc.position - transform.position).magnitude;
-        print(state.ToString());
+        //print(state.ToString());
 
         switch (state)
         {

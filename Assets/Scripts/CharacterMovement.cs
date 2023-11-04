@@ -68,6 +68,14 @@ public class CharacterMovement : MonoBehaviour
             print("Boost is on cooldown!");
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit[] hits;
+            Ray ray = pc_camera.ScreenPointToRay(new Vector2(0.5f * Screen.width, 0.5f * Screen.height));
+            hits = Physics.RaycastAll(ray, 5.0f);
+            handleInteractions(hits);
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && !boost_on && !boost_on_cooldown)
         {
             boost_on = true;
@@ -99,6 +107,29 @@ public class CharacterMovement : MonoBehaviour
         } else
         {
             character_body.velocity = Vector3.MoveTowards(character_body.velocity, Vector3.ClampMagnitude(character_body.velocity, MAX_SPEED), Time.deltaTime);
+        }
+    }
+
+
+    private void handleInteractions(RaycastHit[] hits)
+    {
+        foreach (RaycastHit hit in hits)
+        {
+            string name = hit.transform.gameObject.name;
+
+            switch (name)
+            {
+                case "DeadFish":
+                    Destroy(hit.transform.gameObject);
+                    GameState.Instance.num_fish_eaten++;
+                    break;
+                case "Scale":
+                    Destroy(hit.transform.gameObject);
+                    GameState.Instance.num_scales_collected++; 
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
