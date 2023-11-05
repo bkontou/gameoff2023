@@ -37,6 +37,7 @@ public class FishAI : MonoBehaviour
     public float AI_IDLE_RANGE = 100f;
     public float STALK_SPEED = 1.0f;
     public float ATTACK_SPEED = 2.0f;
+    public float attack_chance = 0.25f;
     public float stalk_timeout = 5.0f;
 
     public float shadow_height = 3.724f;
@@ -132,8 +133,18 @@ public class FishAI : MonoBehaviour
 
                 if (stalk_timer >= stalk_timeout)
                 {
-                    state = AIState.FindPC; 
-                    break;
+                    float p = Random.Range(0.0f, 1.0f);
+                    print(p);
+                    if (p >= 1.0f - attack_chance)
+                    {
+                        state = AIState.FindPC; 
+                        break;
+                    }
+                    else
+                    {
+                        state = AIState.FindStalkPath;
+                        break;
+                    }
                 }
                 break;
 

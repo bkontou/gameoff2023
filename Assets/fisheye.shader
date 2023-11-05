@@ -113,7 +113,7 @@ fixed4 frag (v2f i) : SV_Target
                 
     float d = length(xy);
 
-    if (d >= 2.0)
+    if (d >= 1.0)
     {
         discard;
     }
