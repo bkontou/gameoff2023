@@ -47,8 +47,6 @@ public class FishAI : MonoBehaviour
     {
         current_path = new NavMeshPath();
         ai_home_loc = transform.position;
-        print(shadow_height);
-        print(shadow_soft.transform.position);
     }
 
     // Update is called once per frame
@@ -256,25 +254,11 @@ public class FishAI : MonoBehaviour
 
     private void swapShadowHard()
     {
-        UnityEngine.Vector3 hpos = shadow_hard.transform.localPosition;
-        UnityEngine.Vector3 spos = shadow_soft.transform.localPosition;
-
-        hpos.y = shadow_height;
-        spos.y = 100;
-
-        shadow_hard.transform.localPosition = hpos;
-        shadow_soft.transform.localPosition = spos;
+        
     }
 
     private void swapShadowSoft()
     {
-        UnityEngine.Vector3 hpos = shadow_hard.transform.localPosition;
-        UnityEngine.Vector3 spos = shadow_soft.transform.localPosition;
-
-        hpos.y = 100;
-        spos.y = shadow_height;
-
-        shadow_hard.transform.localPosition = hpos;
-        shadow_soft.transform.localPosition = spos;
+        
     }
 }

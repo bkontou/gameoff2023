@@ -1,4 +1,4 @@
-Shader "Hidden/fisheye"
+Shader "Custom/fisheye"
 {
 Properties
 {
@@ -64,7 +64,7 @@ float2 distort(float2 pos)
 {
     float theta = atan2(pos.y, pos.x);
     float radius = length(pos);
-    radius = pow(radius, fisheye_power);
+    radius = pow(radius, 1.3);
     pos.x = radius * cos(theta);
     pos.y = radius * sin(theta);
 

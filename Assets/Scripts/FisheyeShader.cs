@@ -34,6 +34,7 @@ public class FisheyeShader : MonoBehaviour
     // OnRenderImage() is called when the camera has finished rendering.
     private void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
-        Graphics.Blit(src, dst, material);
+        print("huh??");
+        //Graphics.Blit(src, dst, material);
     }
 }
