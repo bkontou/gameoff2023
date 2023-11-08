@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class FishAI : MonoBehaviour
 {
 
     public Transform pc;
     public NavMeshAgent nav_agent;
-    public GameObject shadow_hard;
-    public GameObject shadow_soft;
+    public DecalProjector shadow;
 
     private enum AIState
     {
@@ -47,6 +48,7 @@ public class FishAI : MonoBehaviour
     {
         current_path = new NavMeshPath();
         ai_home_loc = transform.position;
+        
     }
 
     // Update is called once per frame
@@ -57,7 +59,8 @@ public class FishAI : MonoBehaviour
 
         switch (state)
         {
-            case AIState.Chase:     
+            case AIState.Chase:
+                swapShadowHard();
                 if ((pc.position - nav_agent.destination).magnitude > 2)
                 {
                     if (findPCPath())
@@ -103,6 +106,7 @@ public class FishAI : MonoBehaviour
                 }
 
             case AIState.FindStalkPath:
+                nav_agent.speed = STALK_SPEED;
                 swapShadowSoft();
                 if (dist_to_pc > AI_IDLE_RANGE)
                 {
@@ -122,6 +126,7 @@ public class FishAI : MonoBehaviour
                 }
 
             case AIState.Stalk:
+                swapShadowSoft();
                 if (dist_to_pc > AI_IDLE_RANGE)
                 {
                     state = AIState.Idle;
@@ -147,6 +152,7 @@ public class FishAI : MonoBehaviour
                 break;
 
             case AIState.FindPC:
+                nav_agent.speed = ATTACK_SPEED;
                 swapShadowHard();
                 if (dist_to_pc > AI_IDLE_RANGE)
                 {
@@ -178,6 +184,7 @@ public class FishAI : MonoBehaviour
                 break; 
 
             case AIState.Idle:
+                nav_agent.speed = STALK_SPEED;
                 swapShadowSoft();
                 doIdle(Time.deltaTime);
                 if (dist_to_pc <=  AI_IDLE_RANGE)
@@ -254,11 +261,13 @@ public class FishAI : MonoBehaviour
 
     private void swapShadowHard()
     {
-        
+        shadow.fadeFactor = Mathf.MoveTowards(shadow.fadeFactor, 1.0f, Time.deltaTime);
+        shadow.size = UnityEngine.Vector3.MoveTowards(shadow.size, new UnityEngine.Vector3(8f, 8f, 15f), Time.deltaTime);
     }
 
     private void swapShadowSoft()
     {
-        
+        shadow.fadeFactor = Mathf.MoveTowards(shadow.fadeFactor, 0.5f, Time.deltaTime);
+        shadow.size = UnityEngine.Vector3.MoveTowards(shadow.size, new UnityEngine.Vector3(10f, 10f, 15f), Time.deltaTime);
     }
 }
