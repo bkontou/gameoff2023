@@ -13,6 +13,7 @@ public class FishAI : MonoBehaviour
     public Transform pc;
     public NavMeshAgent nav_agent;
     public DecalProjector shadow;
+    public AudioSource audio;
 
     private enum AIState
     {
