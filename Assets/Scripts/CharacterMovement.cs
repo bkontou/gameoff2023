@@ -7,6 +7,45 @@ public class CharacterMovement : MonoBehaviour
 {
     public Rigidbody character_body;
     public Camera pc_camera;
+    public HUD game_HUD;
+
+    private int _hunger_level = 6;
+    public int hunger_level
+    {
+        get => _hunger_level;
+        set
+        {
+            _hunger_level = value;
+            if (_hunger_level < 0)
+            {
+                _hunger_level = 0;
+            }
+            if (_hunger_level > 6)
+            {
+                _hunger_level = 6;
+            }
+            game_HUD.setHungerLevel(_hunger_level);
+        }
+    }
+
+    private int _boost_level = 5;
+    public int boost_level
+    {
+        get => _boost_level;
+        set
+        {
+            _boost_level = value;
+            if (_boost_level < 0)
+            {
+                _boost_level = 0;
+            }
+            if (_boost_level > 5)
+            {
+                _boost_level = 5;
+            }
+            game_HUD.setBoostLevel(_boost_level);
+        }
+    }
 
     public float MAX_SPEED = 5.0f;
     public float SWIM_FORCE = 5.0f;
@@ -14,8 +53,14 @@ public class CharacterMovement : MonoBehaviour
     public float BACKWARD_SWIM_FORCE = 1.0f;
     public float PC_CAMERA_SPEED = 1.0f;
 
+    public float HUNGER_RATE = 0.5f; // HUNGER DECREMENT PER SEC
+    private float hunger_rate_timer = 0;
+
+    public float BOOST_REFRESH_RATE = 2.0f; // boost increment per sec
+    private float boost_rate_timer = 0;
+    public float boost_hunger_percentage = 0.25f;
+
     public float BOOST_SPEED = 5.0f;
-    public float boost_cooldown = 1.0f;
     public float boost_duration = 1.0f;
     private bool boost_on = false;
     private bool boost_on_cooldown = false;
@@ -29,7 +74,8 @@ public class CharacterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        hunger_level = 6;
+        boost_level = 5;
     }
 
     // Update is called once per frame
@@ -83,15 +129,14 @@ public class CharacterMovement : MonoBehaviour
             boost_timer = 0.0f;
             boost_cooldown_timer = 0.0f;
             boost_dir = transform.forward;
+            boost_level = 0;
+
+            hunger_rate_timer += boost_hunger_percentage;
         }
 
-        if (boost_on_cooldown)
+        if (boost_level == 5)
         {
-            boost_cooldown_timer += Time.deltaTime;
-            if (boost_cooldown_timer > boost_cooldown)
-            {
-                boost_on_cooldown = false;
-            }
+            boost_on_cooldown = false;
         }
 
         if (boost_on)
@@ -108,6 +153,26 @@ public class CharacterMovement : MonoBehaviour
         {
             character_body.velocity = Vector3.MoveTowards(character_body.velocity, Vector3.ClampMagnitude(character_body.velocity, MAX_SPEED), Time.deltaTime);
         }
+
+        // Update hunger
+        if (hunger_rate_timer >= 1.0f)
+        {
+            hunger_level--;
+            hunger_rate_timer = 0.0f;
+        } else
+        {
+            hunger_rate_timer += HUNGER_RATE * Time.deltaTime;
+        }
+
+        // Update boost
+        if (boost_rate_timer >= 1.0f)
+        {
+            boost_level++;
+            boost_rate_timer = 0.0f;
+        } else
+        {
+            boost_rate_timer += BOOST_REFRESH_RATE * Time.deltaTime;
+        }
     }
 
 
@@ -122,6 +187,7 @@ public class CharacterMovement : MonoBehaviour
                 case "DeadFish":
                     Destroy(hit.transform.gameObject);
                     GameState.Instance.num_fish_eaten++;
+                    hunger_level = 6;
                     break;
                 case "Scale":
                     Destroy(hit.transform.gameObject);

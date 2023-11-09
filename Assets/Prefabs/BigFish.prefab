@@ -171,7 +171,12 @@ MonoBehaviour:
   pc: {fileID: 0}
   nav_agent: {fileID: 2487051709363860976}
   shadow: {fileID: 2487051708478928696}
-  audio: {fileID: 0}
+  audio: {fileID: 6077502401360687634}
+  stalk_audio:
+  - {fileID: 8300000, guid: 91e017e658ef7464ab627f7449a9de8d, type: 3}
+  chase_audio:
+  - {fileID: 8300000, guid: 97e42c91532f9f741846aa6b6e23bcb6, type: 3}
+  - {fileID: 8300000, guid: 9248d769fb8c8184f8df5bfc8e02102c, type: 3}
   STALK_RADIUS: 100
   AI_IDLE_RANGE: 150
   STALK_SPEED: 3
@@ -212,10 +217,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 91e017e658ef7464ab627f7449a9de8d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

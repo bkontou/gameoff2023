@@ -113,9 +113,13 @@ fixed4 frag (v2f i) : SV_Target
                 
     float d = length(xy);
 
-    if (d >= 1.0)
+    if (d >= 1.0 && d <= 1.01)
     {
-        discard;
+        return float4(0.5, 0.5, 0.5, 1);
+    }
+    else if (d > 1.01)
+    {
+        return float4(1, 1, 1, 0);
     }
 
     float2 uv = i.uv; //distort(xy);

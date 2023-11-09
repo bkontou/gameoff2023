@@ -15,6 +15,9 @@ public class FishAI : MonoBehaviour
     public DecalProjector shadow;
     public AudioSource audio;
 
+    public AudioClip[] stalk_audio;
+    public AudioClip[] chase_audio;
+
     private enum AIState
     {
         Chase,
@@ -57,6 +60,8 @@ public class FishAI : MonoBehaviour
     {
         float dist_to_pc = (pc.position - transform.position).magnitude;
         //print(state.ToString());
+
+        playVoiceLine();
 
         switch (state)
         {
@@ -212,6 +217,28 @@ public class FishAI : MonoBehaviour
         //dir_to_pc.y = 0;
        
         //transform.position += 3.0f * Time.deltaTime * dir_to_pc;
+    }
+
+    void playVoiceLine()
+    {
+        if (!audio.isPlaying)
+        {
+            switch (state)
+            {
+                case AIState.Chase:
+                    audio.clip = chase_audio[Random.Range(0, chase_audio.Length)];
+                    audio.Play();
+                    break;
+                case AIState.Stalk:
+                    audio.clip = stalk_audio[Random.Range(0, stalk_audio.Length)];
+                    audio.Play();
+                    break;
+                default:
+                    audio.Stop();
+                    break;
+            }
+        }
+        
     }
 
     private void doChase(float delta)
