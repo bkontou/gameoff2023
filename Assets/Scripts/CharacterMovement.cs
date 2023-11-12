@@ -179,7 +179,11 @@ public class CharacterMovement : MonoBehaviour
             }
         } else
         {
-            character_body.velocity = Vector3.MoveTowards(character_body.velocity, Vector3.ClampMagnitude(character_body.velocity, MAX_SPEED), Time.deltaTime);
+            character_body.velocity = Vector3.MoveTowards(
+                character_body.velocity,
+                Vector3.ClampMagnitude(character_body.velocity, MAX_SPEED),
+                5 * Time.deltaTime);
+            // character_body.velocity = Vector3.ClampMagnitude(character_body.velocity, MAX_SPEED);
         }
 
         // Update hunger
