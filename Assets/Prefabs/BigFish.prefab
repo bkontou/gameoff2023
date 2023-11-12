@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2487051708478928697}
   - component: {fileID: 2487051708478928696}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 2487051709363860979}
   - component: {fileID: 2487051709363860976}
   - component: {fileID: 6077502401360687634}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BigFish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,18 +172,22 @@ MonoBehaviour:
   nav_agent: {fileID: 2487051709363860976}
   shadow: {fileID: 2487051708478928696}
   audio: {fileID: 6077502401360687634}
+  shadow_trigger: {fileID: 0}
   stalk_audio:
   - {fileID: 8300000, guid: 91e017e658ef7464ab627f7449a9de8d, type: 3}
   chase_audio:
   - {fileID: 8300000, guid: 97e42c91532f9f741846aa6b6e23bcb6, type: 3}
   - {fileID: 8300000, guid: 9248d769fb8c8184f8df5bfc8e02102c, type: 3}
+  munch_audio: {fileID: 8300000, guid: 9d854072cd801564d8144efa9194ed69, type: 3}
   STALK_RADIUS: 100
   AI_IDLE_RANGE: 150
   STALK_SPEED: 3
   ATTACK_SPEED: 6.5
   attack_chance: 0.25
   stalk_timeout: 15
+  attack_timeout: 2.5
   shadow_height: 3.724
+  pc_light_intensity: 10
 --- !u!195 &2487051709363860976
 NavMeshAgent:
   m_ObjectHideFlags: 0

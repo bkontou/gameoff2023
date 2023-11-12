@@ -14,9 +14,11 @@ public class FishAI : MonoBehaviour
     public NavMeshAgent nav_agent;
     public DecalProjector shadow;
     public AudioSource audio;
+    public SphereCollider shadow_trigger;
 
     public AudioClip[] stalk_audio;
     public AudioClip[] chase_audio;
+    public AudioClip munch_audio;
 
     private enum AIState
     {
@@ -35,6 +37,7 @@ public class FishAI : MonoBehaviour
     private NavMeshPath current_path = null;
 
     private float stalk_timer = 0.0f;
+    private float attack_timer = 0.0f;
 
     private UnityEngine.Vector3 ai_home_loc;
 
@@ -44,8 +47,12 @@ public class FishAI : MonoBehaviour
     public float ATTACK_SPEED = 2.0f;
     public float attack_chance = 0.25f;
     public float stalk_timeout = 5.0f;
+    public float attack_timeout = 1.0f;
 
     public float shadow_height = 3.724f;
+    public float pc_light_intensity = 10.0f;
+
+    private bool is_on_top_pc = false;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +66,6 @@ public class FishAI : MonoBehaviour
     void Update()
     {
         float dist_to_pc = (pc.position - transform.position).magnitude;
-        //print(state.ToString());
 
         playVoiceLine();
 
@@ -77,6 +83,9 @@ public class FishAI : MonoBehaviour
                         state = AIState.GiveUp; 
                         break;
                     }
+                } else
+                {
+                    state = AIState.Attack; break;
                 }
                 
                 doChase(Time.deltaTime);
@@ -89,6 +98,7 @@ public class FishAI : MonoBehaviour
                 break;
 
             case AIState.GiveUp:
+                pc.GetComponent<CharacterMovement>().pc_area_light.intensity = pc_light_intensity;
                 if (findRunAwayPath())
                 {
                     nav_agent.SetPath(current_path);
@@ -178,13 +188,43 @@ public class FishAI : MonoBehaviour
                 }
 
             case AIState.Attack:
+                swapShadowHard();
+                if ((pc.position - nav_agent.destination).magnitude > 2)
+                {
+                    if (findPCPath())
+                    {
+                        nav_agent.SetPath(current_path);
+                    }
+                    else
+                    {
+                        state = AIState.GiveUp;
+                        break;
+                    }
+                }
+
                 if (dist_to_pc > AI_IDLE_RANGE)
                 {
                     state = AIState.Idle;
                     break;
                 }
 
-                
+                float cur_light_intensity = pc.GetComponent<CharacterMovement>().pc_area_light.intensity;
+                if (is_on_top_pc)
+                {
+                    pc.GetComponent<CharacterMovement>().pc_area_light.intensity = Mathf.MoveTowards(cur_light_intensity, 0, (pc_light_intensity / attack_timeout) * Time.deltaTime);
+                } else
+                {
+                    pc.GetComponent<CharacterMovement>().pc_area_light.intensity = Mathf.MoveTowards(cur_light_intensity, pc_light_intensity, (2 * pc_light_intensity / attack_timeout)  * Time.deltaTime);
+                }
+
+                if (cur_light_intensity == 0)
+                {
+                    killPC();
+                    audio.clip = munch_audio;
+                    audio.Play();
+                    state = AIState.Finish; 
+                    break;
+                }
 
                 doAttack(Time.deltaTime);
                 break; 
@@ -200,6 +240,10 @@ public class FishAI : MonoBehaviour
                 {
                     state = AIState.Idle;
                 }
+                break;
+
+            case AIState.Finish:
+                // Do nothing here
                 break;
 
             default:
@@ -243,7 +287,7 @@ public class FishAI : MonoBehaviour
 
     private void doChase(float delta)
     {
-        
+        nav_agent.Move(ATTACK_SPEED * delta * (nav_agent.nextPosition - transform.position).normalized);
     }
 
     private void doStalk(float delta)
@@ -297,5 +341,27 @@ public class FishAI : MonoBehaviour
     {
         shadow.fadeFactor = Mathf.MoveTowards(shadow.fadeFactor, 0.5f, Time.deltaTime);
         shadow.size = UnityEngine.Vector3.MoveTowards(shadow.size, new UnityEngine.Vector3(10f, 10f, 15f), Time.deltaTime);
+    }
+
+    public void killPC()
+    {
+        pc.GetComponent<CharacterMovement>().setControllable(false);
+        GameState.Instance.game_hud.onPCDeath();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "PC")
+        {
+            is_on_top_pc = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.name == "PC")
+        {
+            is_on_top_pc = false;
+        }
     }
 }

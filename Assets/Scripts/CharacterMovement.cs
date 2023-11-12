@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
@@ -8,6 +10,11 @@ public class CharacterMovement : MonoBehaviour
     public Rigidbody character_body;
     public Camera pc_camera;
     public HUD game_HUD;
+    public Light pc_area_light;
+    public DialogueManager dialogue_manager;
+    public TextMeshProUGUI dialogue_label;
+    public GameObject bitten_fish;
+    public AudioSource munch_audio;
 
     private int _hunger_level = 6;
     public int hunger_level
@@ -55,6 +62,8 @@ public class CharacterMovement : MonoBehaviour
 
     public float HUNGER_RATE = 0.5f; // HUNGER DECREMENT PER SEC
     private float hunger_rate_timer = 0;
+    public float hunger_death_timer = 10.0f;
+    public float pc_light_level = 10.0f;
 
     public float BOOST_REFRESH_RATE = 2.0f; // boost increment per sec
     private float boost_rate_timer = 0;
@@ -71,16 +80,35 @@ public class CharacterMovement : MonoBehaviour
     private float camera_pitch = 0.0f;
     private float camera_yaw = 0.0f;
 
+    private bool controllable = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        hunger_level = 6;
+        hunger_level = 3;
         boost_level = 5;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!controllable)
+        {
+            return;
+        }
+
+        // Uh oh! You may die!
+        if (hunger_level == 0)
+        {
+            pc_area_light.intensity = Mathf.MoveTowards(pc_area_light.intensity, 0, (pc_light_level / hunger_death_timer) * Time.deltaTime);
+
+            if (pc_area_light.intensity <= 0)
+            {
+                controllable = false;
+                GameState.Instance.game_hud.onPCDeath();
+            }
+        }
+
         camera_yaw = PC_CAMERA_SPEED * Input.GetAxis("Mouse X");
         camera_pitch -= PC_CAMERA_SPEED * Input.GetAxis("Mouse Y");
         camera_pitch = Mathf.Clamp(camera_pitch, 10.0f, 39.9f);
@@ -181,21 +209,42 @@ public class CharacterMovement : MonoBehaviour
         foreach (RaycastHit hit in hits)
         {
             string name = hit.transform.gameObject.name;
-
+            print(name);
             switch (name)
             {
                 case "DeadFish":
                     Destroy(hit.transform.gameObject);
                     GameState.Instance.num_fish_eaten++;
+                    pc_area_light.intensity = pc_light_level;
                     hunger_level = 6;
+                    munch_audio.Play();
                     break;
                 case "Scale":
                     Destroy(hit.transform.gameObject);
-                    GameState.Instance.num_scales_collected++; 
+                    GameState.Instance.num_scales_collected++;
+                    break;
+                case "fish_bitten":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.fish_dialogue);
+                    dialogue_manager.startDialogue();
+                    //Cursor.lockState = CursorLockMode.Locked;
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    public void setControllable(bool c)
+    {
+        controllable = c;
+    }
+
+    public void eatThatSpecificFish()
+    {
+        Destroy(bitten_fish);
+        munch_audio.Play();
+        GameState.Instance.num_fish_eaten++;
+        hunger_level = 6;
     }
 }

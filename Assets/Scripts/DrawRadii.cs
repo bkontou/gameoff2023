@@ -1,3 +1,4 @@
+#if (UNITY_EDITOR) 
 using UnityEngine;
 using UnityEditor;
 
@@ -13,3 +14,5 @@ public class CubeEditor : Editor
         Handles.DrawWireDisc(cubeExample.transform.position, new Vector3(0, 1, 0), cubeExample.AI_IDLE_RANGE);
     }
 }
+
+#endif

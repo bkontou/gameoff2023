@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameState : MonoBehaviour
-{   
+{
     public static GameState Instance { get; private set; }
 
     public int num_fish_eaten = 0;
-    public int num_scales_collected = 0;
+    private int _num_scales_collected = 0;
+    public int num_scales_collected
+    {
+        get => _num_scales_collected;
+        set
+        {
+            _num_scales_collected = value;
+            game_hud.setNumScalesText(value);   
+        }
+    }
+
+    public TextAsset fish_dialogue;
+    public HUD game_hud;
 
     void Awake()
     {

@@ -87,7 +87,7 @@ float3 color_hash(float2 pos)
 {    
     float3 hash = float3(-0.01 * frac(sin(7.289 * pos.x + 11.23 * pos.y) * 23758.5453),
                          -0.01 * frac(sin(7.289 * pos.y + 11.23 * pos.x) * 23758.5453),
-                          0.1 * frac(sin(7.289 * pos.x * 11.23 * pos.y) * 23758.5453));
+                          0.05 * frac(sin(7.289 * pos.x * 11.23 * pos.y) * 23758.5453));
     return hash;
 }
 
