@@ -85,6 +85,7 @@ public class CharacterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
         hunger_level = 3;
         boost_level = 5;
     }

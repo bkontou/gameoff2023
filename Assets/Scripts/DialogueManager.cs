@@ -52,6 +52,7 @@ public class DialogueManager : MonoBehaviour
 
     public void startDialogue()
     {
+        Cursor.visible = true;
         gameObject.SetActive(true);
         cur_dialogue_position = 0;
         dialogue_label.text = dialogue_string[cur_dialogue_position];
@@ -59,6 +60,7 @@ public class DialogueManager : MonoBehaviour
 
     public void closeDialogue()
     {
+        Cursor.visible = false;
         pc_controller.setControllable(true);
         gameObject.SetActive(false);
 
