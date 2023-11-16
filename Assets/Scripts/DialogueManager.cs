@@ -64,7 +64,7 @@ public class DialogueManager : MonoBehaviour
         pc_controller.setControllable(true);
         gameObject.SetActive(false);
 
-        if (dialogue_asset.name == "fish")
+        if (dialogue_asset.name == "bitten_fish")
         {
             pc_controller.eatThatSpecificFish();
         }

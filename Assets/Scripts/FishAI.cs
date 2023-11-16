@@ -212,9 +212,17 @@ public class FishAI : MonoBehaviour
                 if (is_on_top_pc)
                 {
                     pc.GetComponent<CharacterMovement>().pc_area_light.intensity = Mathf.MoveTowards(cur_light_intensity, 0, (pc_light_intensity / attack_timeout) * Time.deltaTime);
+                    pc.GetComponent<CharacterMovement>().pc_lower_light.intensity = Mathf.MoveTowards(
+                        pc.GetComponent<CharacterMovement>().pc_lower_light.intensity, 
+                        0, 
+                        (pc.GetComponent<CharacterMovement>().pc_lower_light_level / attack_timeout) * Time.deltaTime);
                 } else
                 {
                     pc.GetComponent<CharacterMovement>().pc_area_light.intensity = Mathf.MoveTowards(cur_light_intensity, pc_light_intensity, (2 * pc_light_intensity / attack_timeout)  * Time.deltaTime);
+                    pc.GetComponent<CharacterMovement>().pc_lower_light.intensity = Mathf.MoveTowards(
+                        pc.GetComponent<CharacterMovement>().pc_lower_light.intensity,
+                        pc.GetComponent<CharacterMovement>().pc_lower_light_level,
+                        (pc.GetComponent<CharacterMovement>().pc_lower_light_level / attack_timeout) * Time.deltaTime);
                 }
 
                 if (cur_light_intensity == 0)

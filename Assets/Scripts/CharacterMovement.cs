@@ -11,6 +11,7 @@ public class CharacterMovement : MonoBehaviour
     public Camera pc_camera;
     public HUD game_HUD;
     public Light pc_area_light;
+    public Light pc_lower_light;
     public DialogueManager dialogue_manager;
     public TextMeshProUGUI dialogue_label;
     public GameObject bitten_fish;
@@ -64,6 +65,7 @@ public class CharacterMovement : MonoBehaviour
     private float hunger_rate_timer = 0;
     public float hunger_death_timer = 10.0f;
     public float pc_light_level = 10.0f;
+    public float pc_lower_light_level = 0.25f;
 
     public float BOOST_REFRESH_RATE = 2.0f; // boost increment per sec
     private float boost_rate_timer = 0;
@@ -102,6 +104,7 @@ public class CharacterMovement : MonoBehaviour
         if (hunger_level == 0)
         {
             pc_area_light.intensity = Mathf.MoveTowards(pc_area_light.intensity, 0, (pc_light_level / hunger_death_timer) * Time.deltaTime);
+            pc_lower_light.intensity = Mathf.MoveTowards(pc_lower_light.intensity, 0, (pc_lower_light_level / hunger_death_timer) * Time.deltaTime);
 
             if (pc_area_light.intensity <= 0)
             {
@@ -222,6 +225,7 @@ public class CharacterMovement : MonoBehaviour
                     Destroy(hit.transform.gameObject);
                     GameState.Instance.num_fish_eaten++;
                     pc_area_light.intensity = pc_light_level;
+                    pc_lower_light.intensity = pc_lower_light_level;
                     hunger_level = 6;
                     munch_audio.Play();
                     break;
@@ -234,6 +238,21 @@ public class CharacterMovement : MonoBehaviour
                     dialogue_manager.loadJSON(GameState.Instance.fish_dialogue);
                     dialogue_manager.startDialogue();
                     //Cursor.lockState = CursorLockMode.Locked;
+                    break;
+                case "FishGuy1":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.fish_guy_1_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "FishGuy2":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.fish_guy_2_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "HorseshoeCrab":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.horseshoe_crab_dialogue);
+                    dialogue_manager.startDialogue();
                     break;
                 default:
                     break;
