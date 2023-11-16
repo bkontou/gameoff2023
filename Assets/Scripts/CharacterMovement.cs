@@ -254,6 +254,11 @@ public class CharacterMovement : MonoBehaviour
                     dialogue_manager.loadJSON(GameState.Instance.horseshoe_crab_dialogue);
                     dialogue_manager.startDialogue();
                     break;
+                case "Blobfish":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.blobfish_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
                 default:
                     break;
             }
