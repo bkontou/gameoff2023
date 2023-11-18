@@ -16,6 +16,10 @@ public class CharacterMovement : MonoBehaviour
     public TextMeshProUGUI dialogue_label;
     public GameObject bitten_fish;
     public AudioSource munch_audio;
+    public AudioSource movement_audio;
+
+    public AudioClip boost_audio_clip;
+    public AudioClip move_audio_clip;
 
     private int _hunger_level = 6;
     public int hunger_level
@@ -88,6 +92,7 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         hunger_level = 3;
         boost_level = 5;
     }
@@ -115,7 +120,6 @@ public class CharacterMovement : MonoBehaviour
 
         camera_yaw = PC_CAMERA_SPEED * Input.GetAxis("Mouse X");
         camera_pitch -= PC_CAMERA_SPEED * Input.GetAxis("Mouse Y");
-        print(camera_pitch);
         camera_pitch = Mathf.Clamp(camera_pitch, 12.0f, 70f);
 
         Vector3 camera_angles = pc_camera.transform.eulerAngles;
@@ -165,6 +169,10 @@ public class CharacterMovement : MonoBehaviour
             boost_level = 0;
 
             hunger_rate_timer += boost_hunger_percentage;
+
+            movement_audio.clip = boost_audio_clip;
+            movement_audio.pitch = 1.0f + Random.Range(-0.25f, 0.25f);
+            movement_audio.Play();
         }
 
         if (boost_level == 5)
@@ -218,7 +226,6 @@ public class CharacterMovement : MonoBehaviour
         foreach (RaycastHit hit in hits)
         {
             string name = hit.transform.gameObject.name;
-            print(name);
             switch (name)
             {
                 case "DeadFish":
@@ -227,6 +234,7 @@ public class CharacterMovement : MonoBehaviour
                     pc_area_light.intensity = pc_light_level;
                     pc_lower_light.intensity = pc_lower_light_level;
                     hunger_level = 6;
+                    munch_audio.pitch = 1.0f + Random.Range(-0.25f, 0.25f);
                     munch_audio.Play();
                     break;
                 case "Scale":
@@ -257,6 +265,11 @@ public class CharacterMovement : MonoBehaviour
                 case "Blobfish":
                     controllable = false;
                     dialogue_manager.loadJSON(GameState.Instance.blobfish_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "Crab":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.crab_dialogue);
                     dialogue_manager.startDialogue();
                     break;
                 default:

@@ -15,10 +15,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogue_label;
     public CharacterMovement pc_controller;
 
-    public TextAsset dialogue_asset;
-
-
     public string[] dialogue_string;
+    private string dialogue_name;
     private int cur_dialogue_position = 0;
 
     // Start is called before the first frame update
@@ -36,6 +34,7 @@ public class DialogueManager : MonoBehaviour
     {
         Dialogue dialogue = JsonUtility.FromJson<Dialogue>(json_asset.text);
         dialogue_string = dialogue.dialogue;
+        dialogue_name = dialogue.name;
     }
 
     public void switchNextDialogue()
@@ -53,6 +52,7 @@ public class DialogueManager : MonoBehaviour
     public void startDialogue()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         gameObject.SetActive(true);
         cur_dialogue_position = 0;
         dialogue_label.text = dialogue_string[cur_dialogue_position];
@@ -61,10 +61,12 @@ public class DialogueManager : MonoBehaviour
     public void closeDialogue()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         pc_controller.setControllable(true);
         gameObject.SetActive(false);
 
-        if (dialogue_asset.name == "bitten_fish")
+        print(dialogue_name);
+        if (dialogue_name == "bitten_fish")
         {
             pc_controller.eatThatSpecificFish();
         }

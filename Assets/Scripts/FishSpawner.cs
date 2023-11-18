@@ -50,7 +50,6 @@ public class FishSpawner : MonoBehaviour
             Vector3 spawn_pos = spawners[i].transform.position;
             spawn_pos.y = fish_spawn_height;
 
-            print("spawning fish!");
             GameObject fish = Instantiate(fish_objects[Random.Range(0, fish_objects.Length)], spawn_pos, Random.rotation);
             fish.name = "DeadFish";
             spawns[i] = fish;

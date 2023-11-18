@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -153,7 +154,6 @@ public class FishAI : MonoBehaviour
                 if (stalk_timer >= stalk_timeout)
                 {
                     float p = Random.Range(0.0f, 1.0f);
-                    print(p);
                     if (p >= 1.0f - attack_chance)
                     {
                         state = AIState.FindPC; 
@@ -180,6 +180,7 @@ public class FishAI : MonoBehaviour
                 {
                     nav_agent.SetPath(current_path);
                     state = AIState.Chase;
+                    audio.Stop();
                     break;
                 } else
                 {
@@ -278,10 +279,17 @@ public class FishAI : MonoBehaviour
             switch (state)
             {
                 case AIState.Chase:
+                    audio.pitch = 1.0f + Random.Range(-0.2f, 0.2f);
+                    audio.clip = chase_audio[Random.Range(0, chase_audio.Length)];
+                    audio.Play();
+                    break;
+                case AIState.Attack:
+                    audio.pitch = 1.0f + Random.Range(-0.2f, 0.2f);
                     audio.clip = chase_audio[Random.Range(0, chase_audio.Length)];
                     audio.Play();
                     break;
                 case AIState.Stalk:
+                    audio.pitch = 1.0f;
                     audio.clip = stalk_audio[Random.Range(0, stalk_audio.Length)];
                     audio.Play();
                     break;

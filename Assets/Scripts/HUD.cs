@@ -19,6 +19,7 @@ public class HUD : MonoBehaviour
     public GameObject restart_button;
     public GameObject quit_button;
     public GameObject pause_menu;
+    public GameObject help_menu;
 
     private bool game_paused = false;
 
@@ -36,6 +37,7 @@ public class HUD : MonoBehaviour
             if (game_paused)
             {
                 Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
                 pc_object.GetComponent<CharacterMovement>().setControllable(true);
                 pause_menu.SetActive(false);
                 Time.timeScale = 1.0f;
@@ -43,6 +45,7 @@ public class HUD : MonoBehaviour
             }
             else {
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 pc_object.GetComponent<CharacterMovement>().setControllable(false);
                 pause_menu.SetActive(true);
                 Time.timeScale = 0.0f;
@@ -69,6 +72,7 @@ public class HUD : MonoBehaviour
     public void onPCDeath() 
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         death_text.alpha = 1;
         restart_button.SetActive(true);
         quit_button.SetActive(true);
@@ -88,10 +92,24 @@ public class HUD : MonoBehaviour
     {
         if (game_paused) {
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             pc_object.GetComponent<CharacterMovement>().setControllable(true);
             game_paused = false;
             pause_menu.SetActive(false);
             Time.timeScale = 1.0f;
         }
+    }
+
+    public void showHelpMenu()
+    {
+        print("opening help menu");
+        help_menu.SetActive(true);
+        pause_menu.SetActive(false);
+    }
+
+    public void hideHelpMenu()
+    {
+        help_menu.SetActive(false);
+        pause_menu.SetActive(true);
     }
 }
