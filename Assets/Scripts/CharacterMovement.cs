@@ -68,8 +68,8 @@ public class CharacterMovement : MonoBehaviour
     public float HUNGER_RATE = 0.5f; // HUNGER DECREMENT PER SEC
     private float hunger_rate_timer = 0;
     public float hunger_death_timer = 10.0f;
-    public float pc_light_level = 10.0f;
-    public float pc_lower_light_level = 0.25f;
+    public float pc_light_level = 15.0f;
+    public float pc_lower_light_level = 0.5f;
 
     public float BOOST_REFRESH_RATE = 2.0f; // boost increment per sec
     private float boost_rate_timer = 0;

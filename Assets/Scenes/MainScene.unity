@@ -184,7 +184,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.20652369, g: 0.42350838, b: 0.4811321, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.27006942, g: 0.39622664, b: 0.4811321, a: 1}
     m_PressedColor: {r: 0.05931826, g: 0.20731328, b: 0.2924528, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -789,8 +789,8 @@ MonoBehaviour:
   PC_CAMERA_SPEED: 1
   HUNGER_RATE: 0.0125
   hunger_death_timer: 10
-  pc_light_level: 10
-  pc_lower_light_level: 0.25
+  pc_light_level: 15
+  pc_lower_light_level: 0.5
   BOOST_REFRESH_RATE: 2
   boost_hunger_percentage: 0.25
   BOOST_SPEED: 20
@@ -2387,10 +2387,6 @@ MonoBehaviour:
   fish_bob_amplitude: 0.2
   fish_bob_frequency: 1
   max_rotation_angle: 70
-  angle_to_pc: 0
-  total_angle_to_pc: 0
-  dir_to_pc: {x: 0, y: 0, z: 0}
-  angle_to_rotate: 0
   pc: {fileID: 113128122}
 --- !u!65 &532163646
 BoxCollider:
@@ -3296,10 +3292,6 @@ MonoBehaviour:
   fish_bob_amplitude: 0.2
   fish_bob_frequency: 1
   max_rotation_angle: 70
-  angle_to_pc: 0
-  total_angle_to_pc: 0
-  dir_to_pc: {x: 0, y: 0, z: 0}
-  angle_to_rotate: 0
   pc: {fileID: 113128122}
 --- !u!65 &772838301
 BoxCollider:
@@ -5487,10 +5479,6 @@ MonoBehaviour:
   fish_bob_amplitude: 0.15
   fish_bob_frequency: 1
   max_rotation_angle: 80
-  angle_to_pc: 0
-  total_angle_to_pc: 0
-  dir_to_pc: {x: 0, y: 0, z: 0}
-  angle_to_rotate: 0
   pc: {fileID: 113128122}
 --- !u!65 &1272909832
 BoxCollider:
@@ -5563,7 +5551,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x 0
+  m_text: x 0 / 8
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ceb70716c320fa249a7c91d15a5f65df, type: 2}
   m_sharedMaterial: {fileID: 6824807064369981338, guid: ceb70716c320fa249a7c91d15a5f65df, type: 2}

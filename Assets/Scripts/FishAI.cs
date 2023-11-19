@@ -51,7 +51,7 @@ public class FishAI : MonoBehaviour
     public float attack_timeout = 1.0f;
 
     public float shadow_height = 3.724f;
-    public float pc_light_intensity = 10.0f;
+    public float pc_light_intensity = 15.0f;
 
     private bool is_on_top_pc = false;
 

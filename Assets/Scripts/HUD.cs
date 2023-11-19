@@ -66,7 +66,7 @@ public class HUD : MonoBehaviour
 
     public void setNumScalesText(int num)
     {
-        scales_collected_text.text = "x " + num.ToString();
+        scales_collected_text.text = "x " + num.ToString() + " / 8";
     }
 
     public void onPCDeath() 
