@@ -1,4 +1,4 @@
-Shader "Custom/fisheye"
+Shader "Custom/start_screen"
 {
 Properties
 {
@@ -71,15 +71,7 @@ float2 distort(float2 pos)
     return 0.5 * (pos + 1.0);
 }
 
-float2 wave(float2 pos)
-{
-    float tx = _Time.y;
-    float ty = _Time.y;
-    float x = pos.x + 0.1 * sin(10 * pos.y + pos.x + 0.1 * 3.14 * tx) * 0.05;
-    float y = pos.y + 0.05 * sin( pos.y + pos.x + 0.2 * 3.14 * ty) * 0.05;
-    return float2(x,y);
 
-}
 
 float hash(float2 u)
 {
@@ -132,7 +124,7 @@ fixed4 frag (v2f i) : SV_Target
 
     float2 uv = i.uv; //distort(xy);
     
-    float4 col = blur(wave(distort(xy))); //tex2D(_MainTex, uv);
+    float4 col = float4(0, 0, 0, 1); //blur(uv); //tex2D(_MainTex, uv);
                 
     //float3 hash = color_hash(uv);
     //col.rgb += hash;
