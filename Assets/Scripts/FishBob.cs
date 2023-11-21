@@ -42,18 +42,27 @@ public class FishBob : MonoBehaviour
         Vector3 cur_fwd_dir = Quaternion.Euler(transform.eulerAngles) * transform.forward;
         float total_angle_to_pc = Vector3.SignedAngle(-initial_fwd_dir, dir_to_pc, Vector3.up);
         float angle_to_pc = Vector3.SignedAngle(-cur_fwd_dir, dir_to_pc, Vector3.up);
-        float damping_val = Mathf.Clamp01(-Mathf.Abs(total_angle_to_pc / max_rotation_angle) + 1.0f);
-        angle_to_pc *= damping_val;
-
+        print(angle_to_pc.ToString() + transform.gameObject.name);
         float angle_to_rotate;
-        if (damping_val > 0.0f)
+
+        if (max_rotation_angle >= 180)
         {
             angle_to_rotate = Mathf.Lerp(0f, angle_to_pc, 0.1f);
-        } else
-        {
-            angle_to_rotate = 0f;
         }
-       
+        else
+        {
+            float damping_val = Mathf.Clamp01(-Mathf.Abs(total_angle_to_pc / max_rotation_angle) + 1.0f);
+            angle_to_pc *= damping_val;
+            if (damping_val > 0.0f)
+            {
+                angle_to_rotate = Mathf.Lerp(0f, angle_to_pc, 0.1f);
+            }
+            else
+            {
+                angle_to_rotate = 0f;
+            }
+        }
+
         transform.Rotate(Vector3.forward, angle_to_rotate);
 
         //transform.SetPositionAndRotation(transform.position, Quaternion.AngleAxis(angle_to_pc, Vector3.up));

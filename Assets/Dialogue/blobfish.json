@@ -1,6 +1,10 @@
 {
   "name": "blobfish",
   "dialogue": [
-    "Sorry, buddy, place has been picked clean. And I have dibs on whats left."
+    "Sorry, buddy, place has been picked clean. And I have dibs on whats left.",
+    "What are you still hangin' around for? Go find some other carcas to munch on.",
+    "No, I ain't sharing. These things don't happen often and I'm already late as it is. At beast I've got maybe some cartilage left and if I'm lucky I can take a bit of bone as a souvinir.",
+    "And I had to fight off an octopus just to get this!",
+    "So up yours, go out and find your own scraps, you bum!" 
   ]
 }

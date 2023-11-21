@@ -17,9 +17,11 @@ public class CharacterMovement : MonoBehaviour
     public GameObject bitten_fish;
     public AudioSource munch_audio;
     public AudioSource movement_audio;
+    public AudioSource extra_audio;
 
     public AudioClip boost_audio_clip;
     public AudioClip move_audio_clip;
+    public AudioClip pickup_audio_clip;
 
     private int _hunger_level = 6;
     public int hunger_level
@@ -240,6 +242,8 @@ public class CharacterMovement : MonoBehaviour
                 case "Scale":
                     Destroy(hit.transform.gameObject);
                     GameState.Instance.num_scales_collected++;
+                    extra_audio.clip = pickup_audio_clip;
+                    extra_audio.Play();
                     break;
                 case "fish_bitten":
                     controllable = false;
