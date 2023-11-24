@@ -261,6 +261,11 @@ public class CharacterMovement : MonoBehaviour
                     dialogue_manager.loadJSON(GameState.Instance.fish_guy_2_dialogue);
                     dialogue_manager.startDialogue();
                     break;
+                case "FishGuy3":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.fish_guy_3_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
                 case "HorseshoeCrab":
                     controllable = false;
                     dialogue_manager.loadJSON(GameState.Instance.horseshoe_crab_dialogue);
@@ -274,6 +279,11 @@ public class CharacterMovement : MonoBehaviour
                 case "Crab":
                     controllable = false;
                     dialogue_manager.loadJSON(GameState.Instance.crab_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "FishGang":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.fish_gang_dialogue);
                     dialogue_manager.startDialogue();
                     break;
                 default:

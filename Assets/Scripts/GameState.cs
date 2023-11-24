@@ -21,9 +21,11 @@ public class GameState : MonoBehaviour
     public TextAsset fish_dialogue;
     public TextAsset fish_guy_1_dialogue;
     public TextAsset fish_guy_2_dialogue;
+    public TextAsset fish_guy_3_dialogue;
     public TextAsset horseshoe_crab_dialogue;
     public TextAsset blobfish_dialogue;
     public TextAsset crab_dialogue;
+    public TextAsset fish_gang_dialogue;
     public HUD game_hud;
 
     void Awake()

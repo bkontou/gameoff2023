@@ -1,0 +1,12 @@
+{
+  "name": "fish",
+  "dialogue": [
+	"Oh, uh, hi...",
+        "How are you?",
+        "Sorry, I'm just hiding out here for a bit and I'd prefer to be left alone.",
+        "Yeah, that big guy out there tried to eat me, but I think I'm safe in here.",
+        "You're not going to try to eat me... right?"
+  ]
+}
+
+

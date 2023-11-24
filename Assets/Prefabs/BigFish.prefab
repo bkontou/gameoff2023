@@ -187,7 +187,7 @@ MonoBehaviour:
   stalk_timeout: 15
   attack_timeout: 2.5
   shadow_height: 3.724
-  pc_light_intensity: 10
+  pc_light_intensity: 15
 --- !u!195 &2487051709363860976
 NavMeshAgent:
   m_ObjectHideFlags: 0
