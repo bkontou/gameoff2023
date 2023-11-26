@@ -286,6 +286,16 @@ public class CharacterMovement : MonoBehaviour
                     dialogue_manager.loadJSON(GameState.Instance.fish_gang_dialogue);
                     dialogue_manager.startDialogue();
                     break;
+                case "PufferFish":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.pufferfish_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "SadFish":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.sad_fish_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
                 default:
                     break;
             }
