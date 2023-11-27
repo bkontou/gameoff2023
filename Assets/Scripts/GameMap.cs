@@ -6,13 +6,15 @@ public class GameMap : MonoBehaviour
 {
     public Transform pc;
     public RawImage game_map_image;
-    public UnityEngine.UI.Image pc_position_image;
+    public RawImage pc_position_image;
     public RawImage blackout_image_prefab;
     public Canvas canvas_object;
 
     public int map_divisions = 10;
     public float map_size = 400f;
     public float map_update_polling_timer = 0.6f;
+
+    private float blackout_image_expension_degree = 0.5f;
 
     private bool[,] visited_areas;
     private RawImage[,] blackout_images;
@@ -34,6 +36,7 @@ public class GameMap : MonoBehaviour
                 blackout_obj.transform.SetParent(game_map_image.transform);
                 Vector2 blackout_obj_loc = index_to_map_position(new Vector2Int(i,j));
                 blackout_obj.rectTransform.sizeDelta = new Vector2(map_size / map_divisions, map_size / map_divisions);
+                blackout_obj.rectTransform.sizeDelta *= (1 + blackout_image_expension_degree);
                 blackout_obj.rectTransform.anchoredPosition = blackout_obj_loc;
                 //blackout_obj.rectTransform.rect.Set(blackout_obj_loc.x, blackout_obj_loc.y, map_size / map_divisions, map_size / map_divisions);
                 print(blackout_obj.rectTransform.rect);
@@ -49,6 +52,7 @@ public class GameMap : MonoBehaviour
         if (_polling_timer >= map_update_polling_timer)
         {
             update_map();
+            _polling_timer = 0;
         }
         else
         {
@@ -60,13 +64,26 @@ public class GameMap : MonoBehaviour
     {
         Vector2Int pc_position_index = world_position_to_index(pc.position);
         visited_areas[pc_position_index.x, pc_position_index.y] = true;
+        update_map_areas_around_pos(pc_position_index);
         update_map_image();
+    }
+    
+    private void update_map_areas_around_pos(Vector2Int pos)
+    {
+        visited_areas[(int)Mathf.Clamp(pos.x + 1, 0, map_divisions - 1), pos.y] = true;
+        visited_areas[(int)Mathf.Clamp(pos.x - 1, 0, map_divisions - 1), pos.y] = true;
+        visited_areas[pos.x, (int)Mathf.Clamp(pos.y + 1, 0, map_divisions - 1)] = true;
+        visited_areas[pos.x, (int)Mathf.Clamp(pos.y - 1, 0, map_divisions - 1)] = true;
     }
 
     private void update_map_image()
     {
         Vector2 pc_map_position = world_position_to_map_position(pc.position);
         pc_position_image.rectTransform.anchoredPosition = pc_map_position;
+
+        Vector2 pc_dir = new Vector2(-pc.transform.forward.z, pc.transform.forward.x);
+        float signed_angle = Vector2.SignedAngle(pc_dir, (Vector2) pc_position_image.rectTransform.up);
+        pc_position_image.rectTransform.Rotate(Vector3.back, signed_angle);
 
         for (int i = 0; i < map_divisions; i++)
         {
