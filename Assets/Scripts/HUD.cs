@@ -22,6 +22,7 @@ public class HUD : MonoBehaviour
     public GameObject help_menu;
 
     private bool game_paused = false;
+    public bool dialogue_on = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,7 @@ public class HUD : MonoBehaviour
                 Time.timeScale = 1.0f;
                 game_paused = false;
             }
-            else {
+            else if (!dialogue_on) {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 pc_object.GetComponent<CharacterMovement>().setControllable(false);

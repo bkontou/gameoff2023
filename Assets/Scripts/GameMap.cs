@@ -8,6 +8,7 @@ public class GameMap : MonoBehaviour
     public RawImage game_map_image;
     public RawImage pc_position_image;
     public RawImage blackout_image_prefab;
+    public GameObject blackout_container_object;
     public Canvas canvas_object;
 
     public int map_divisions = 10;
@@ -33,7 +34,7 @@ public class GameMap : MonoBehaviour
                 visited_areas[i,j] = false;
                 
                 RawImage blackout_obj = Instantiate<RawImage>(blackout_image_prefab);
-                blackout_obj.transform.SetParent(game_map_image.transform);
+                blackout_obj.transform.SetParent(blackout_container_object.transform);
                 Vector2 blackout_obj_loc = index_to_map_position(new Vector2Int(i,j));
                 blackout_obj.rectTransform.sizeDelta = new Vector2(map_size / map_divisions, map_size / map_divisions);
                 blackout_obj.rectTransform.sizeDelta *= (1 + blackout_image_expension_degree);

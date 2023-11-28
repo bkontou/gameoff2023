@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI dialogue_label;
     public CharacterMovement pc_controller;
+    public HUD game_hud;
 
     public string[] dialogue_string;
     private string dialogue_name;
@@ -39,6 +40,11 @@ public class DialogueManager : MonoBehaviour
 
     public void switchNextDialogue()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         cur_dialogue_position++;
         if (cur_dialogue_position == dialogue_string.Length)
         {
@@ -51,6 +57,7 @@ public class DialogueManager : MonoBehaviour
 
     public void startDialogue()
     {
+        game_hud.dialogue_on = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         gameObject.SetActive(true);
@@ -60,6 +67,7 @@ public class DialogueManager : MonoBehaviour
 
     public void closeDialogue()
     {
+        game_hud.dialogue_on = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pc_controller.setControllable(true);

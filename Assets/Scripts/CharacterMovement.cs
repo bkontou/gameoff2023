@@ -235,7 +235,7 @@ public class CharacterMovement : MonoBehaviour
                     GameState.Instance.num_fish_eaten++;
                     pc_area_light.intensity = pc_light_level;
                     pc_lower_light.intensity = pc_lower_light_level;
-                    hunger_level = 6;
+                    hunger_level++;
                     munch_audio.pitch = 1.0f + Random.Range(-0.25f, 0.25f);
                     munch_audio.Play();
                     break;
@@ -294,6 +294,16 @@ public class CharacterMovement : MonoBehaviour
                 case "SadFish":
                     controllable = false;
                     dialogue_manager.loadJSON(GameState.Instance.sad_fish_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "ParanoidFish1":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.paranoid_fish_1_dialogue);
+                    dialogue_manager.startDialogue();
+                    break;
+                case "ParanoidFish2":
+                    controllable = false;
+                    dialogue_manager.loadJSON(GameState.Instance.paranoid_fish_2_dialogue);
                     dialogue_manager.startDialogue();
                     break;
                 default:
