@@ -11,11 +11,11 @@ public class GameMap : MonoBehaviour
     public GameObject blackout_container_object;
     public Canvas canvas_object;
 
-    public int map_divisions = 10;
+    public int map_divisions = 25;
     public float map_size = 400f;
     public float map_update_polling_timer = 0.6f;
 
-    private float blackout_image_expension_degree = 0.5f;
+    private float blackout_image_expension_degree = 0.75f;
 
     private bool[,] visited_areas;
     private RawImage[,] blackout_images;
@@ -36,7 +36,7 @@ public class GameMap : MonoBehaviour
                 RawImage blackout_obj = Instantiate<RawImage>(blackout_image_prefab);
                 blackout_obj.transform.SetParent(blackout_container_object.transform);
                 Vector2 blackout_obj_loc = index_to_map_position(new Vector2Int(i,j));
-                blackout_obj.rectTransform.sizeDelta = new Vector2(map_size / map_divisions, map_size / map_divisions);
+                blackout_obj.rectTransform.sizeDelta = new Vector2(game_map_image.rectTransform.rect.width / map_divisions, game_map_image.rectTransform.rect.height / map_divisions);
                 blackout_obj.rectTransform.sizeDelta *= (1 + blackout_image_expension_degree);
                 blackout_obj.rectTransform.anchoredPosition = blackout_obj_loc;
                 //blackout_obj.rectTransform.rect.Set(blackout_obj_loc.x, blackout_obj_loc.y, map_size / map_divisions, map_size / map_divisions);
@@ -75,6 +75,10 @@ public class GameMap : MonoBehaviour
         visited_areas[(int)Mathf.Clamp(pos.x - 1, 0, map_divisions - 1), pos.y] = true;
         visited_areas[pos.x, (int)Mathf.Clamp(pos.y + 1, 0, map_divisions - 1)] = true;
         visited_areas[pos.x, (int)Mathf.Clamp(pos.y - 1, 0, map_divisions - 1)] = true;
+        visited_areas[(int)Mathf.Clamp(pos.x + 1, 0, map_divisions - 1), (int)Mathf.Clamp(pos.y + 1, 0, map_divisions - 1)] = true;
+        visited_areas[(int)Mathf.Clamp(pos.x - 1, 0, map_divisions - 1), (int)Mathf.Clamp(pos.y + 1, 0, map_divisions - 1)] = true;
+        visited_areas[(int)Mathf.Clamp(pos.x + 1, 0, map_divisions - 1), (int)Mathf.Clamp(pos.y - 1, 0, map_divisions - 1)] = true;
+        visited_areas[(int)Mathf.Clamp(pos.x - 1, 0, map_divisions - 1), (int)Mathf.Clamp(pos.y - 1, 0, map_divisions - 1)] = true;
     }
 
     private void update_map_image()

@@ -41,6 +41,7 @@ public class HUD : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 pc_object.GetComponent<CharacterMovement>().setControllable(true);
                 pause_menu.SetActive(false);
+                help_menu.SetActive(false);
                 Time.timeScale = 1.0f;
                 game_paused = false;
             }

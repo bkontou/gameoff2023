@@ -32,6 +32,14 @@ public class GameState : MonoBehaviour
     public TextAsset paranoid_fish_2_dialogue;
     public HUD game_hud;
 
+    public FishAI fish1;
+    public FishAI fish2;
+    public FishAI fish3;
+    public FishAI fish4;
+    public FishAI fish5;
+
+    public CharacterMovement pc;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -48,5 +56,38 @@ public class GameState : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void changeDifficultyHard()
+    {
+        fish1.attack_timeout = 1f;
+        fish2.attack_timeout = 1f;
+        fish3.attack_timeout = 1f;
+        fish4.attack_timeout = 1f;
+        fish5.attack_timeout = 1f;
+        pc.BOOST_REFRESH_RATE = 0.5f;
+        pc.HUNGER_RATE = 0.0625f;
+    }
+
+    public void changeDifficultyNormal()
+    {
+        fish1.attack_timeout = 2.5f;
+        fish2.attack_timeout = 2.5f;
+        fish3.attack_timeout = 2.5f;
+        fish4.attack_timeout = 2.5f;
+        fish5.attack_timeout = 2.5f;
+        pc.BOOST_REFRESH_RATE = 1f;
+        pc.HUNGER_RATE = 0.0125f;
+    }
+
+    public void changeDifficultyEasy()
+    {
+        fish1.attack_timeout = 4.5f;
+        fish2.attack_timeout = 4.5f;
+        fish3.attack_timeout = 4.5f;
+        fish4.attack_timeout = 4.5f;
+        fish5.attack_timeout = 4.5f;
+        pc.BOOST_REFRESH_RATE = 2.5f;
+        pc.HUNGER_RATE = 0.005f;
     }
 }
